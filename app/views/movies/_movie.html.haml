@@ -1,0 +1,7 @@
+-# A single row of the All Movies table
+%tr
+  %td= movie.title 
+  %td= movie.rating
+  %td= movie.release_date
+  %td= movie.director
+  %td= link_to "More about #{movie.title}", movie_path(movie)
