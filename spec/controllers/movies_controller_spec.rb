@@ -13,11 +13,14 @@ describe MoviesController do
       before :each do
         @params = {:movie => {'title' => 'new title', 'description' => 'new description', 'rating' => 'rating'}}
       end        
-      it 'should call the model method that creates new movie' do
-        Movie.should_receive(:create!).with(@params[:movie]).and_return(@fake_movie)
+      it 'should call the model methods that creates new movie' do
+        Movie.should_receive(:new).with(@params[:movie]).and_return(@fake_movie)
+        @fake_movie.should_receive(:save).and_return(true)
         post :create, @params
       end  
       it 'should redirect to index template' do
+        Movie.stub(:new).with(@params[:movie]).and_return(@fake_movie)
+        @fake_movie.stub(:save).and_return(true)
         post :create, @params      
         response.should redirect_to(movies_path)
       end  
@@ -62,6 +65,7 @@ describe MoviesController do
       @origin_movie.stub(:id).and_return(ORIGIN_MOVIE_ID)
       @origin_movie.stub(:title).and_return(ORIGIN_MOVIE_TITLE)
       @origin_movie.stub(:director).and_return(ORIGIN_MOVIE_DIRECTOR)
+      @origin_movie.stub(:grandfathered?).and_return(true)
             
       @similar_movies = [mock(Movie), mock(Movie)]
       @similar_movies.each do |movie|
@@ -105,7 +109,7 @@ describe MoviesController do
       end
       
       it 'should select proper view for rendering' do
-        response.should redirect_to(movies_path)
+        response.should redirect_to(:action => 'show', :id => @origin_movie.id) 
       end
       
       it 'should display warning that movie has no director info' do
