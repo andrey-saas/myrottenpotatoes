@@ -1,5 +1,12 @@
 -# in _movie_form.html.haml (the partial)
 
+- unless @movie.nil? || @movie.errors.empty?
+  #warning
+    Errors preventing this movie from being #{controller.action_name}d
+    %ul
+      - @movie.errors.full_messages.each do |error|
+        %li= error
+
 = label :movie, :title, 'Title'
 = text_field :movie, 'title'
 

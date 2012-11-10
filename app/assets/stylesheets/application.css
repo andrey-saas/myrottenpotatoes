@@ -51,10 +51,21 @@ table#movies th, table#movies td {
 table#movies th.hilite {
   background-color: yellow;
 }
-#notice #warning {
+#notice {
   background: rosybrown;
   margin: 1em 0;
   padding: 4px;
+}
+#warning {
+  color: red;
+  padding: 0.5cm;
+  font-weight: bold;
+  border: 2px solid red;
+}
+div.field_with_errors input {
+  border: 1px solid red;
+  background-color: yellow;
+  font-weight: bold;
 }
 form label {
   display: block;
