@@ -70,7 +70,7 @@ class MoviesController < ApplicationController
     @movies = Movie.find_with_same_director @origin_movie    
     if @movies.empty? then
       flash[:warning] = "'#{@origin_movie.title}' has no director info"
-      redirect_to movies_path
+      redirect_to movie_path(@movie)
     end  
   end
 
